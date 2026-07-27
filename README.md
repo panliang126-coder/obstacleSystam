@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-当前里程碑为 Phase 6：GUI 与系统管理。
+当前里程碑为 Phase 7 HIL readiness；真实硬件验收尚未开始。
 
 - 17 份工程设计文档；
 - 版本化事件信封和 UUIDv7；
@@ -30,6 +30,8 @@
 - PyQt6 Overview/Situation/Risk & Decision/Health/Replay/Management 工作区；
 - 带 RBAC、幂等、revision、双人安全审批和不可变审计的管理服务；
 - 配置、插件、健康聚合和告警确认视图；
+- 证据门控的 HIL Permit、Flight Controller Port 和 Transport 注入边界；
+- MAVLink HIL 的 ENU→NED、endpoint/时效/授权绑定与幂等 Ack 契约；
 - Schema、protobuf、架构、驱动、插件、性能和集成测试。
 
 系统行为和开发顺序以 [00_MASTER.md](00_MASTER.md) 为准。
@@ -117,3 +119,7 @@ codex/                 Codex Agent 规范
 ## 安全说明
 
 当前阶段不会连接真实飞控。`SIM`/`REPLAY` 实现必须与真实 Control Gateway 物理和权限隔离；任何 LIVE 能力都需经过 SIL、HIL、安全评审和显式授权。
+
+Phase 7 当前服务器未发现飞控或传感器台架，详细缺口见
+[Phase 7 HIL readiness](docs/hil/PHASE7_READINESS.md)。Fake Transport 契约通过
+不等于真实 HIL 通过；没有物理隔离、急停和独立安全审批时不会连接真实 endpoint。
