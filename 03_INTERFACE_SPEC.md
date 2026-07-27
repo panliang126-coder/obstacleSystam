@@ -460,6 +460,16 @@ Topic：`path.proposed`/`path.selected`；Schema：`path/1.0`。
 
 这些消息在首次实现前必须在 `schemas/` 中补齐正式 Schema 和示例。
 
+Phase 2 已固化以下补充消息字段：
+
+- `health/1.0`：`component_id`、`component_type`、`status`、`checked_at`、
+  `dependencies`、`data_freshness_ms` 和 `faults`。状态只允许
+  `HEALTHY/DEGRADED/UNHEALTHY/STOPPED/UNKNOWN`。
+- `twin.snapshot/1.0`：`twin_id`、单调 `revision`、`as_of`、`watermark`、
+  `frame_id`、`map_version`、`config_hash`、vehicle/sensor/track/environment/health
+  状态引用、`input_refs`、`staleness` 和聚合 `quality`。引用包含生成该状态的
+  revision；安全消费者不得用未固定 revision 的“latest”引用。
+
 ## 11. Topic 注册表
 
 | Topic | Schema | 默认 QoS/持久化 | 权限 |

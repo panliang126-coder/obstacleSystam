@@ -10,7 +10,7 @@ def test_all_protobuf_contracts_compile(project_root: Path, tmp_path: Path) -> N
     proto_root = project_root / "proto"
     google_include = Path(grpc_tools.__file__).resolve().parent / "_proto"
     proto_files = sorted((proto_root / "low_altitude" / "v1").glob("*.proto"))
-    assert len(proto_files) == 7
+    assert len(proto_files) == 9
 
     result = protoc.main(
         [

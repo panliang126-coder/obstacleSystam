@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "low_altitude/v1/common.proto";
+
+enum ComponentType {
+  COMPONENT_TYPE_UNSPECIFIED = 0;
+  COMPONENT_TYPE_SENSOR = 1;
+  COMPONENT_TYPE_SERVICE = 2;
+  COMPONENT_TYPE_PLUGIN = 3;
+  COMPONENT_TYPE_LINK = 4;
+  COMPONENT_TYPE_STORAGE = 5;
+  COMPONENT_TYPE_CONTROL_GATEWAY = 6;
+}
+
+enum HealthState {
+  HEALTH_STATE_UNSPECIFIED = 0;
+  HEALTH_STATE_HEALTHY = 1;
+  HEALTH_STATE_DEGRADED = 2;
+  HEALTH_STATE_UNHEALTHY = 3;
+  HEALTH_STATE_STOPPED = 4;
+  HEALTH_STATE_UNKNOWN = 5;
+}
+
+message HealthDependency {
+  string component_id = 1;
+  HealthState status = 2;
+}
+
+message HealthFault {
+  string code = 1;
+  string message = 2;
+  bool retryable = 3;
+}
+
+message HealthPayload {
+  string component_id = 1;
+  ComponentType component_type = 2;
+  HealthState status = 3;
+  string checked_at = 4;
+  repeated HealthDependency dependencies = 5;
+  optional double data_freshness_ms = 6;
+  repeated HealthFault faults = 7;
+}
+
+message HealthMessage {
+  EventMetadata metadata = 1;
+  HealthPayload payload = 2;
+}

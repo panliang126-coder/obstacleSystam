@@ -1,0 +1,52 @@
+{
+  "schema": "twin.snapshot/1.0",
+  "event_id": "019f3aa8-0101-7000-8c11-111111111111",
+  "trace_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "source": {
+    "service": "twin-service",
+    "instance_id": "site-alpha/uav-001",
+    "plugin": null,
+    "plugin_version": null
+  },
+  "observed_at": "2026-07-27T03:20:15.100Z",
+  "received_at": "2026-07-27T03:20:15.100Z",
+  "monotonic_ns": 100000000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 1,
+  "quality": {
+    "valid": true,
+    "confidence": 0.95,
+    "clock_uncertainty_ms": 0.0,
+    "flags": []
+  },
+  "payload": {
+    "twin_id": "site-alpha/uav-001",
+    "revision": 1,
+    "as_of": "2026-07-27T03:20:15.100Z",
+    "watermark": "2026-07-27T03:20:15.100Z",
+    "frame_id": "site-alpha-enu-v1",
+    "map_version": "site-alpha-map@1.0.0",
+    "config_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "vehicle_ref": null,
+    "sensor_refs": ["state://sensor/radar-front-01/1"],
+    "track_refs": [],
+    "environment_ref": null,
+    "health_refs": [],
+    "input_refs": ["019f3aa1-0101-7000-bd8c-81aa65f7f010"],
+    "staleness": {
+      "vehicle_ms": null,
+      "sensors_max_ms": 0.0,
+      "tracks_max_ms": null,
+      "environment_ms": null
+    },
+    "quality": {
+      "valid": true,
+      "confidence": 0.95,
+      "clock_uncertainty_ms": 0.0,
+      "flags": []
+    }
+  }
+}

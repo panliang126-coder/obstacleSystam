@@ -1,0 +1,33 @@
+{
+  "scenario": {
+    "id": "dynamic-crossing-v1",
+    "duration_s": 1.0,
+    "seed": 42001,
+    "start_at": "2026-07-27T03:20:15.000Z",
+    "frame": {
+      "id": "site-alpha-enu-v1",
+      "origin_wgs84": [31.2304, 121.4737, 100.0]
+    },
+    "vehicle_id": "uav-001",
+    "radar": {
+      "id": "radar-front-01",
+      "calibration_id": "radar-front-cal-20260701",
+      "rate_hz": 10.0,
+      "range_m": 250.0,
+      "azimuth_fov_deg": 140.0,
+      "elevation_fov_deg": 90.0,
+      "detection_probability": 1.0,
+      "range_noise_std_m": 0.25,
+      "angle_noise_std_deg": 0.1,
+      "velocity_noise_std_m_s": 0.05
+    },
+    "targets": [
+      {
+        "id": "intruder-01",
+        "classification": "UAV",
+        "initial_enu_m": [100.0, 10.0, 20.0],
+        "velocity_enu_m_s": [-8.0, 0.0, 0.0]
+      }
+    ]
+  }
+}

@@ -6,14 +6,17 @@
 
 ## 当前状态
 
-当前里程碑为 Phase 1：架构与契约。
+当前里程碑为 Phase 2：模拟器与数字孪生。
 
 - 17 份工程设计文档；
 - 版本化事件信封和 UUIDv7；
 - Event Bus、Driver、Plugin、Repository、Clock 端口；
-- 六类核心 JSON Schema 和 protobuf 定义；
+- 六类核心及 Health/Twin Snapshot JSON Schema 和 protobuf 定义；
 - 有效/无效契约样例；
-- Schema、protobuf 和架构依赖自动测试。
+- 有界内存 Event Bus、可控 SimClock 和确定性雷达模拟 Driver；
+- 单调 revision、去重、晚到保护和容量限制的 Twin State Store；
+- 可重复的“模拟雷达→Event Bus→Twin Snapshot”端到端链路；
+- Schema、protobuf、架构、驱动、Event Bus、Twin 和集成测试。
 
 系统行为和开发顺序以 [00_MASTER.md](00_MASTER.md) 为准。
 
@@ -29,6 +32,15 @@ obstacle-schema validate-examples
 pytest
 ```
 
+运行 Phase 2 的确定性演示：
+
+```bash
+obstacle-phase2-demo
+```
+
+命令会执行 10 个模拟雷达扫描，输出规范化事件哈希、最终 Twin revision
+和快照哈希。同一场景、种子和版本的结果必须完全一致。
+
 服务器宿主机没有 Python 3.11 时，可使用 Docker：
 
 ```bash
@@ -38,7 +50,8 @@ docker build --target test -t obstacle-system:test .
 ## 目录
 
 ```text
-src/low_altitude_ai/   Python 领域类型、端口与 Schema 工具
+src/low_altitude_ai/   领域、端口、Adapter、模拟器和数字孪生
+configs/               场景 Schema 与确定性场景
 schemas/v1/            JSON Schema 2020-12
 schemas/examples/      有效/无效契约样例
 proto/                 protobuf v1 定义

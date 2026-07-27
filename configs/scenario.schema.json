@@ -1,0 +1,105 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/config/scenario.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["scenario"],
+  "properties": {
+    "scenario": {
+      "type": "object",
+      "required": [
+        "id",
+        "duration_s",
+        "seed",
+        "start_at",
+        "frame",
+        "vehicle_id",
+        "radar",
+        "targets"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "duration_s": {"type": "number", "exclusiveMinimum": 0, "maximum": 86400},
+        "seed": {"type": "integer"},
+        "start_at": {"type": "string", "format": "date-time"},
+        "frame": {
+          "type": "object",
+          "required": ["id", "origin_wgs84"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "origin_wgs84": {
+              "type": "array",
+              "prefixItems": [
+                {"type": "number", "minimum": -90, "maximum": 90},
+                {"type": "number", "minimum": -180, "maximum": 180},
+                {"type": "number"}
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false
+        },
+        "vehicle_id": {"type": "string", "minLength": 1},
+        "radar": {
+          "type": "object",
+          "required": [
+            "id",
+            "calibration_id",
+            "rate_hz",
+            "range_m",
+            "azimuth_fov_deg",
+            "elevation_fov_deg",
+            "detection_probability",
+            "range_noise_std_m",
+            "angle_noise_std_deg",
+            "velocity_noise_std_m_s"
+          ],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "calibration_id": {"type": "string", "minLength": 1},
+            "rate_hz": {"type": "number", "exclusiveMinimum": 0, "maximum": 400},
+            "range_m": {"type": "number", "exclusiveMinimum": 0},
+            "azimuth_fov_deg": {"type": "number", "exclusiveMinimum": 0, "maximum": 360},
+            "elevation_fov_deg": {"type": "number", "exclusiveMinimum": 0, "maximum": 180},
+            "detection_probability": {"type": "number", "minimum": 0, "maximum": 1},
+            "range_noise_std_m": {"type": "number", "minimum": 0},
+            "angle_noise_std_deg": {"type": "number", "minimum": 0},
+            "velocity_noise_std_m_s": {"type": "number", "minimum": 0}
+          },
+          "additionalProperties": false
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "classification", "initial_enu_m", "velocity_enu_m_s"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "classification": {"type": "string", "minLength": 1},
+              "initial_enu_m": {"$ref": "#/$defs/vector3"},
+              "velocity_enu_m_s": {"$ref": "#/$defs/vector3"}
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "vector3": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number"},
+        {"type": "number"},
+        {"type": "number"}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    }
+  },
+  "additionalProperties": false
+}

@@ -10,10 +10,12 @@ from low_altitude_ai.schemas.registry import SchemaRegistry, SchemaValidationErr
 EXPECTED_SCHEMAS = {
     "decision/1.0",
     "environment/1.0",
+    "health/1.0",
     "path/1.0",
     "risk/1.0",
     "sensor/1.0",
     "target/1.0",
+    "twin.snapshot/1.0",
 }
 
 

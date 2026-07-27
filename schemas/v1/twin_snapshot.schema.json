@@ -1,0 +1,97 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/twin_snapshot.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "twin.snapshot/1.0",
+  "title": "Twin Snapshot Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "twin.snapshot/1.0"},
+        "payload": {"$ref": "#/$defs/twin_snapshot_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "state_ref": {
+      "type": "string",
+      "pattern": "^state://[A-Za-z0-9._/-]+/[1-9][0-9]*$"
+    },
+    "nullable_age": {"type": ["number", "null"], "minimum": 0},
+    "twin_snapshot_payload": {
+      "type": "object",
+      "required": [
+        "twin_id",
+        "revision",
+        "as_of",
+        "watermark",
+        "frame_id",
+        "map_version",
+        "config_hash",
+        "vehicle_ref",
+        "sensor_refs",
+        "track_refs",
+        "environment_ref",
+        "health_refs",
+        "input_refs",
+        "staleness",
+        "quality"
+      ],
+      "properties": {
+        "twin_id": {"type": "string", "minLength": 1},
+        "revision": {"type": "integer", "minimum": 1},
+        "as_of": {"type": "string", "format": "date-time"},
+        "watermark": {"type": "string", "format": "date-time"},
+        "frame_id": {"type": "string", "minLength": 1},
+        "map_version": {"type": "string", "minLength": 1},
+        "config_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "vehicle_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/state_ref"},
+            {"type": "null"}
+          ]
+        },
+        "sensor_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/state_ref"},
+          "uniqueItems": true
+        },
+        "track_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/state_ref"},
+          "uniqueItems": true
+        },
+        "environment_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/state_ref"},
+            {"type": "null"}
+          ]
+        },
+        "health_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/state_ref"},
+          "uniqueItems": true
+        },
+        "input_refs": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/$defs/uuid7"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "staleness": {
+          "type": "object",
+          "required": ["vehicle_ms", "sensors_max_ms", "tracks_max_ms", "environment_ms"],
+          "properties": {
+            "vehicle_ms": {"$ref": "#/$defs/nullable_age"},
+            "sensors_max_ms": {"$ref": "#/$defs/nullable_age"},
+            "tracks_max_ms": {"$ref": "#/$defs/nullable_age"},
+            "environment_ms": {"$ref": "#/$defs/nullable_age"}
+          },
+          "additionalProperties": false
+        },
+        "quality": {"$ref": "common.schema.json#/$defs/quality"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

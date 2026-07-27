@@ -29,6 +29,11 @@
 
 每次更新必须通过 Schema、时间、frame、revision 和来源检查。
 
+Phase 2 在感知模块实现前允许订阅 `sensor.normalized.*`，但仅将其投影为
+Sensor Evidence/Health 实体，用于验证 Driver→Bus→Twin 基础链路。该投影不得
+把雷达检测或模拟 truth 冒充为系统航迹；Phase 3 起动态目标仍只由
+`perception.tracks` 更新。
+
 ## 4. 输出
 
 - `twin.snapshot/1.0`：轻量快照元数据、revision、关键实体及大型状态引用。
@@ -102,6 +107,7 @@ Snapshot 至少包含：
   "map_version": "site-alpha-map@3.2.0",
   "config_hash": "sha256:...",
   "vehicle_ref": "state://vehicle/uav-001/18722",
+  "sensor_refs": ["state://sensor/radar-front-01/18722"],
   "track_refs": ["state://track/..."],
   "environment_ref": "object://weather-grid/...",
   "staleness": {"vehicle_ms": 20, "tracks_max_ms": 85, "environment_ms": 220},
@@ -110,6 +116,10 @@ Snapshot 至少包含：
 ```
 
 Risk、Path 和 Decision 必须记录使用的 revision，不能只引用“最新状态”。
+
+当前 Phase 2 内存实现提供单写者 revision、事件去重、晚到保护、实体容量上限
+和确定性快照哈希。持久化 checkpoint、空间索引、预测和 what-if branch 在后续
+里程碑实现，不能将当前内存 Store 用作 LIVE 权威状态。
 
 ## 8. 状态预测
 

@@ -1,6 +1,7 @@
 # protobuf v1
 
-These definitions map the six JSON wire contracts to protobuf without changing domain semantics.
+These definitions map the six core JSON wire contracts and the Phase 2 Health/Twin
+Snapshot contracts to protobuf without changing domain semantics.
 
 Compatibility rules:
 
@@ -9,4 +10,4 @@ Compatibility rules:
 - enum value `0` is always `*_UNSPECIFIED`;
 - new fields are optional/repeated and require safe defaults;
 - JSON Schema `schema` remains explicit in `EventMetadata`;
-- CI compiles every `.proto` file.
+- the server contract suite compiles every `.proto` file.

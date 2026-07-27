@@ -89,7 +89,7 @@
       "properties": {
         "schema": {
           "type": "string",
-          "pattern": "^[a-z_]+/[0-9]+\\.[0-9]+$"
+          "pattern": "^[a-z_]+(?:\\.[a-z_]+)*/[0-9]+\\.[0-9]+$"
         },
         "event_id": {"$ref": "#/$defs/uuid7"},
         "trace_id": {"$ref": "#/$defs/uuid7"},

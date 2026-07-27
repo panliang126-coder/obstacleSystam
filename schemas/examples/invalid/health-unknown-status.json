@@ -1,0 +1,34 @@
+{
+  "schema": "health/1.0",
+  "event_id": "019f3aa7-0101-7000-8c11-111111111111",
+  "trace_id": "019f3aa7-0101-7000-8c11-111111111111",
+  "causation_id": null,
+  "source": {
+    "service": "simulator-service",
+    "instance_id": "dynamic-crossing-v1",
+    "plugin": "radar-sim",
+    "plugin_version": "1.0.0"
+  },
+  "observed_at": "2026-07-27T03:20:15.000Z",
+  "received_at": "2026-07-27T03:20:15.000Z",
+  "monotonic_ns": 0,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 0,
+  "quality": {
+    "valid": true,
+    "confidence": 1.0,
+    "clock_uncertainty_ms": 0.0,
+    "flags": []
+  },
+  "payload": {
+    "component_id": "radar-front-01",
+    "component_type": "SENSOR",
+    "status": "MAGIC",
+    "checked_at": "2026-07-27T03:20:15.000Z",
+    "dependencies": [],
+    "data_freshness_ms": 0.0,
+    "faults": []
+  }
+}

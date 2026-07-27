@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+message TwinStaleness {
+  optional double vehicle_ms = 1;
+  optional double sensors_max_ms = 2;
+  optional double tracks_max_ms = 3;
+  optional double environment_ms = 4;
+}
+
+message TwinSnapshotPayload {
+  string twin_id = 1;
+  uint64 revision = 2;
+  google.protobuf.Timestamp as_of = 3;
+  google.protobuf.Timestamp watermark = 4;
+  string frame_id = 5;
+  string map_version = 6;
+  string config_hash = 7;
+  optional string vehicle_ref = 8;
+  repeated string sensor_refs = 9;
+  repeated string track_refs = 10;
+  optional string environment_ref = 11;
+  repeated string health_refs = 12;
+  repeated string input_refs = 13;
+  TwinStaleness staleness = 14;
+  Quality quality = 15;
+}
+
+message TwinSnapshotMessage {
+  EventMetadata metadata = 1;
+  TwinSnapshotPayload payload = 2;
+}
