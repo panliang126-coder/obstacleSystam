@@ -4,4 +4,4 @@ from low_altitude_ai.domain.envelope import Envelope, Quality, Source, new_envel
 from low_altitude_ai.domain.identifiers import uuid7
 
 __all__ = ["Envelope", "Quality", "Source", "new_envelope", "uuid7"]
-__version__ = "0.3.0"
+__version__ = "0.4.0"

@@ -192,3 +192,19 @@ Twin Query/Prediction、EventBus、Clock、配置/插件仓库、数值/几何�
 - 不确定度单调性：其他条件相同，协方差/缺失增加不应降低风险。
 - 决策回放：与人工标注/安全规则 golden result 对比。
 - 性能测试目标数×horizon×step 矩阵，并验证取消旧评估。
+
+## 14. Phase 4 可执行基线
+
+当前 `explainable_rule_risk@1.0.0` 提供：
+
+- 动态目标 3D CPA/TCPA、相对速度、定位协方差和反应时间保护体；
+- 预测保护体侵入作为硬规则，风险不得被其他低分维度平均稀释；
+- 天气风险因子与无效/过期天气 HIGH 保守下限；
+- 电量储备、控制链路和 Twin 新鲜度规则；
+- 五维分数、等级、稳定 explanation code、证据和排除圆柱约束；
+- 固定输入的确定性边界结果。
+
+`dynamic-crossing-v1` 中保护体侵入必须达到 CRITICAL 并输出
+`CLOSING_TRACK`。无威胁且数据完整场景为 LOW；天气缺失场景不得低于 HIGH。
+当前实现尚未覆盖静态地图、概率碰撞 Monte Carlo、路径沿线天气采样、返航/备降
+能源模型、插件超时接管和 1000 目标压力测试。

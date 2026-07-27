@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "low-altitude-ai-system"
-version = "0.3.0"
+version = "0.4.0"
 description = "Low Altitude Intelligent Perception and Decision System"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -26,6 +26,7 @@ dev = [
 obstacle-schema = "low_altitude_ai.schemas.cli:main"
 obstacle-phase2-demo = "low_altitude_ai.app.phase2_demo:main"
 obstacle-phase3-demo = "low_altitude_ai.app.phase3_demo:main"
+obstacle-phase4-demo = "low_altitude_ai.app.phase4_demo:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

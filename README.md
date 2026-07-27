@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-当前里程碑为 Phase 3：感知与天气。
+当前里程碑为 Phase 4：风险评估与路径规划。
 
 - 17 份工程设计文档；
 - 版本化事件信封和 UUIDv7；
@@ -19,6 +19,9 @@
 - 不读取模拟 truth 的雷达检测关联、航迹确认/滑行/丢失基线；
 - 带物理质量控制、加权融合和保守缺测语义的天气估计；
 - 可重复的“Sensor→Perception/Weather→Twin”Phase 3 链路；
+- 基于 CPA/TCPA、天气、能源、链路和 Twin 新鲜度的解释性规则风险引擎；
+- 带连续线段碰撞检查、地理围栏和无解拒绝的确定性绕行规划器；
+- 可重复的“Twin→Risk→Path”Phase 4 动态交叉目标 SIL 链路；
 - Schema、protobuf、架构、驱动、插件、性能和集成测试。
 
 系统行为和开发顺序以 [00_MASTER.md](00_MASTER.md) 为准。
@@ -52,6 +55,15 @@ obstacle-phase3-demo
 
 该命令输出航迹确认数、位置 RMSE、天气风速误差、Twin revision 和三条确定性
 哈希。基线场景要求位置 RMSE ≤ 2 m、风速误差 ≤ 2 m/s。
+
+运行 Phase 4 风险与路径规划演示：
+
+```bash
+obstacle-phase4-demo
+```
+
+标准动态交叉场景必须输出结构化 `CLOSING_TRACK` 解释、HIGH/CRITICAL 风险以及
+通过连续碰撞验证且最小净空不低于配置的绕行路径。
 
 服务器宿主机没有 Python 3.11 时，可使用 Docker：
 

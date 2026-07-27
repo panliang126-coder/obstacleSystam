@@ -224,3 +224,19 @@ Twin Query/Prediction、Risk、地图/几何、求解器、EventBus、Clock、Pl
 - 与 Dijkstra/A* 小问题最优基线对照；RRT* 固定种子回归。
 - deadline/cancel、求解器失败、地图版本切换和消息风暴。
 - 端到端模拟闭环测试路径切换连续性、碰撞数和控制 Ack。
+
+## 17. Phase 4 可执行基线
+
+当前 `validated_detour_planner@1.0.0` 提供：
+
+- Twin/Risk revision、一致性、有效期和请求 deadline 前置检查；
+- 直接路径和确定性左右绕行候选；
+- 对每个线段执行连续排除体净空检查，而非只检查航点；
+- ENU 地理围栏、路径长度/时间/能源/风险分项代价；
+- 有解输出 `CANDIDATE`，无解输出 `REJECTED`、无效 quality 和
+  `NO_FEASIBLE_PATH`，不把半成品标成可用；
+- 相同输入的路径语义和哈希一致。
+
+动态交叉 SIL 场景要求零硬约束违规、最小净空 ≥ 10 m，完整本地链 P95 ≤ 100 ms。
+当前实现只处理基础 3D 点/线和排除圆柱，尚未实现 A* 栅格、RRT*/MPC、地形、
+复杂 geofence、动力学曲率/加速度验证、移动障碍时变轨迹和规划取消。
