@@ -1,0 +1,45 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/sensor.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "sensor/1.0",
+  "title": "Sensor Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "sensor/1.0"},
+        "payload": {"$ref": "#/$defs/sensor_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "sensor_payload": {
+      "type": "object",
+      "required": [
+        "sensor_id",
+        "sensor_type",
+        "source_session_id",
+        "frame_id",
+        "calibration_id",
+        "sample_format",
+        "sample",
+        "raw_ref",
+        "diagnostics"
+      ],
+      "properties": {
+        "sensor_id": {"type": "string", "minLength": 1},
+        "sensor_type": {
+          "enum": ["RADAR", "EO", "IR", "WEATHER", "GNSS", "IMU", "ACOUSTIC", "EM", "RADIO", "OTHER"]
+        },
+        "source_session_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "frame_id": {"type": "string", "minLength": 1},
+        "calibration_id": {"type": ["string", "null"], "minLength": 1},
+        "sample_format": {"type": "string", "pattern": "^[a-z0-9_]+_v[0-9]+$"},
+        "sample": {"type": "object"},
+        "raw_ref": {"type": ["string", "null"]},
+        "diagnostics": {"type": "object"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "decision/1.0",
+  "event_id": "019f3ab6-0101-7000-b8f6-d17417e1c921",
+  "trace_id": "019f3ab1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": "019f3ab5-0101-7000-a01f-5f673f9cba2f",
+  "source": {
+    "service": "decision-service",
+    "instance_id": "edge-01",
+    "plugin": "baseline-safety-policy",
+    "plugin_version": "1.0.0"
+  },
+  "observed_at": "2026-07-27T03:20:15.250Z",
+  "received_at": "2026-07-27T03:20:15.270Z",
+  "monotonic_ns": 2387349540000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 311,
+  "quality": {
+    "valid": true,
+    "confidence": 1.0,
+    "clock_uncertainty_ms": 2.0,
+    "flags": []
+  },
+  "payload": {
+    "decision_id": "019f3ab6-0102-7000-8192-fbcc8ad66f25",
+    "mission_id": "mission-20260727-001",
+    "action": "FLY",
+    "priority": 85,
+    "path_id": "019f3ab5-0102-7000-b6f7-7b73b661c32d",
+    "risk_id": "019f3ab4-0102-7000-90a3-d7104bce2a5a",
+    "twin_revision": 18722,
+    "reason_codes": ["COLLISION_RISK_HIGH"],
+    "explanation": "未知动作应被拒绝。",
+    "preconditions": [],
+    "expires_at": "2026-07-27T03:20:15.600Z",
+    "policy": {
+      "name": "baseline_safety_policy",
+      "version": "1.0.0",
+      "ruleset_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "authorization": {
+      "state": "PENDING",
+      "gate": null,
+      "checked_at": null,
+      "failures": []
+    }
+  }
+}

@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+
+enum RuntimeMode {
+  RUNTIME_MODE_UNSPECIFIED = 0;
+  RUNTIME_MODE_SIM = 1;
+  RUNTIME_MODE_REPLAY = 2;
+  RUNTIME_MODE_HIL = 3;
+  RUNTIME_MODE_LIVE = 4;
+}
+
+message Source {
+  string service = 1;
+  string instance_id = 2;
+  optional string plugin = 3;
+  optional string plugin_version = 4;
+}
+
+message Quality {
+  bool valid = 1;
+  double confidence = 2;
+  optional double clock_uncertainty_ms = 3;
+  repeated string flags = 4;
+}
+
+message EventMetadata {
+  string schema = 1;
+  string event_id = 2;
+  string trace_id = 3;
+  optional string causation_id = 4;
+  Source source = 5;
+  google.protobuf.Timestamp observed_at = 6;
+  google.protobuf.Timestamp received_at = 7;
+  optional uint64 monotonic_ns = 8;
+  string run_id = 9;
+  RuntimeMode mode = 10;
+  optional string vehicle_id = 11;
+  uint64 sequence = 12;
+  Quality quality = 13;
+}
+
+message Wgs84Position {
+  double lat_deg = 1;
+  double lon_deg = 2;
+  double alt_m_msl = 3;
+}
+
+message EnuPosition {
+  double east_m = 1;
+  double north_m = 2;
+  double up_m = 3;
+}
+
+message Position {
+  optional Wgs84Position wgs84 = 1;
+  optional EnuPosition enu = 2;
+  string frame_id = 3;
+  repeated double covariance = 4;
+}
+
+message Velocity {
+  string frame_id = 1;
+  double east_m_s = 2;
+  double north_m_s = 3;
+  double up_m_s = 4;
+  repeated double covariance = 5;
+}
+
+enum SpatialVolumeType {
+  SPATIAL_VOLUME_TYPE_UNSPECIFIED = 0;
+  SPATIAL_VOLUME_TYPE_POINT = 1;
+  SPATIAL_VOLUME_TYPE_POLYGON = 2;
+  SPATIAL_VOLUME_TYPE_BOX3D = 3;
+  SPATIAL_VOLUME_TYPE_GRID = 4;
+}
+
+message SpatialVolume {
+  SpatialVolumeType type = 1;
+  string frame_id = 2;
+  repeated double min = 3;
+  repeated double max = 4;
+  repeated double coordinates = 5;
+  optional string grid_ref = 6;
+}

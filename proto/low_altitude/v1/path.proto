@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+enum PathStatus {
+  PATH_STATUS_UNSPECIFIED = 0;
+  PATH_STATUS_CANDIDATE = 1;
+  PATH_STATUS_SELECTED = 2;
+  PATH_STATUS_REJECTED = 3;
+  PATH_STATUS_EXPIRED = 4;
+}
+
+message PlannerIdentity {
+  string name = 1;
+  string version = 2;
+  string algorithm = 3;
+}
+
+message Waypoint {
+  uint32 seq = 1;
+  repeated double enu_m = 2;
+  double target_speed_m_s = 3;
+  double eta_s = 4;
+}
+
+message PathCosts {
+  double distance = 1;
+  double time = 2;
+  double energy = 3;
+  double risk = 4;
+  double total = 5;
+}
+
+message PathValidation {
+  bool collision_free = 1;
+  bool dynamics_feasible = 2;
+  bool geofence_valid = 3;
+  double minimum_clearance_m = 4;
+}
+
+message PathPayload {
+  string path_id = 1;
+  string mission_id = 2;
+  PlannerIdentity planner = 3;
+  uint64 twin_revision = 4;
+  string risk_id = 5;
+  string frame_id = 6;
+  repeated Waypoint waypoints = 7;
+  PathCosts costs = 8;
+  repeated string constraints_applied = 9;
+  PathValidation validation = 10;
+  google.protobuf.Timestamp valid_until = 11;
+  PathStatus status = 12;
+}
+
+message PathMessage {
+  EventMetadata metadata = 1;
+  PathPayload payload = 2;
+}

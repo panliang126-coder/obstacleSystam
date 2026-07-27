@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+enum RiskSubjectType {
+  RISK_SUBJECT_TYPE_UNSPECIFIED = 0;
+  RISK_SUBJECT_TYPE_VEHICLE = 1;
+  RISK_SUBJECT_TYPE_TRACK = 2;
+  RISK_SUBJECT_TYPE_PATH = 3;
+  RISK_SUBJECT_TYPE_MISSION = 4;
+  RISK_SUBJECT_TYPE_AREA = 5;
+}
+
+enum RiskLevel {
+  RISK_LEVEL_UNSPECIFIED = 0;
+  RISK_LEVEL_LOW = 1;
+  RISK_LEVEL_MODERATE = 2;
+  RISK_LEVEL_HIGH = 3;
+  RISK_LEVEL_CRITICAL = 4;
+  RISK_LEVEL_UNKNOWN = 5;
+}
+
+message RiskSubject {
+  RiskSubjectType type = 1;
+  string id = 2;
+}
+
+message RiskDimensions {
+  double weather = 1;
+  double collision = 2;
+  double energy = 3;
+  double communication = 4;
+  double system = 5;
+}
+
+message RiskExplanation {
+  string code = 1;
+  RiskLevel severity = 2;
+  string summary = 3;
+  google.protobuf.Struct evidence = 4;
+}
+
+message RiskPayload {
+  string risk_id = 1;
+  RiskSubject subject = 2;
+  uint64 twin_revision = 3;
+  double horizon_s = 4;
+  double score = 5;
+  RiskLevel level = 6;
+  RiskDimensions dimensions = 7;
+  repeated RiskExplanation explanations = 8;
+  google.protobuf.Timestamp valid_until = 9;
+  repeated google.protobuf.Struct recommended_constraints = 10;
+}
+
+message RiskMessage {
+  EventMetadata metadata = 1;
+  RiskPayload payload = 2;
+}

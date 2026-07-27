@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/struct.proto";
+import "low_altitude/v1/common.proto";
+
+enum SensorType {
+  SENSOR_TYPE_UNSPECIFIED = 0;
+  SENSOR_TYPE_RADAR = 1;
+  SENSOR_TYPE_EO = 2;
+  SENSOR_TYPE_IR = 3;
+  SENSOR_TYPE_WEATHER = 4;
+  SENSOR_TYPE_GNSS = 5;
+  SENSOR_TYPE_IMU = 6;
+  SENSOR_TYPE_ACOUSTIC = 7;
+  SENSOR_TYPE_EM = 8;
+  SENSOR_TYPE_RADIO = 9;
+  SENSOR_TYPE_OTHER = 10;
+}
+
+message SensorPayload {
+  string sensor_id = 1;
+  SensorType sensor_type = 2;
+  string source_session_id = 3;
+  string frame_id = 4;
+  optional string calibration_id = 5;
+  string sample_format = 6;
+  google.protobuf.Struct sample = 7;
+  optional string raw_ref = 8;
+  google.protobuf.Struct diagnostics = 9;
+}
+
+message SensorMessage {
+  EventMetadata metadata = 1;
+  SensorPayload payload = 2;
+}

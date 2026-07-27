@@ -1,0 +1,97 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/environment.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "environment/1.0",
+  "title": "Environment Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "environment/1.0"},
+        "payload": {"$ref": "#/$defs/environment_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "factor": {"type": "number", "minimum": 0, "maximum": 1},
+    "environment_payload": {
+      "type": "object",
+      "required": [
+        "environment_id",
+        "valid_from",
+        "valid_to",
+        "coverage",
+        "grid_ref",
+        "wind",
+        "temperature_deg_c",
+        "relative_humidity_pct",
+        "precipitation_mm_h",
+        "visibility_m",
+        "pressure_pa",
+        "risk_factors",
+        "provenance"
+      ],
+      "properties": {
+        "environment_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "valid_from": {"type": "string", "format": "date-time"},
+        "valid_to": {"type": "string", "format": "date-time"},
+        "coverage": {"$ref": "common.schema.json#/$defs/spatial_volume"},
+        "grid_ref": {"type": ["string", "null"]},
+        "wind": {
+          "type": "object",
+          "required": [
+            "east_m_s",
+            "north_m_s",
+            "up_m_s",
+            "gust_m_s",
+            "uncertainty_m_s"
+          ],
+          "properties": {
+            "east_m_s": {"type": "number"},
+            "north_m_s": {"type": "number"},
+            "up_m_s": {"type": "number"},
+            "gust_m_s": {"type": "number", "minimum": 0},
+            "uncertainty_m_s": {"type": "number", "minimum": 0}
+          },
+          "additionalProperties": false
+        },
+        "temperature_deg_c": {"type": ["number", "null"]},
+        "relative_humidity_pct": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "precipitation_mm_h": {"type": ["number", "null"], "minimum": 0},
+        "visibility_m": {"type": ["number", "null"], "minimum": 0},
+        "pressure_pa": {"type": ["number", "null"], "minimum": 0},
+        "risk_factors": {
+          "type": "object",
+          "required": ["wind", "precipitation", "visibility", "icing", "convective", "uncertainty"],
+          "properties": {
+            "wind": {"$ref": "#/$defs/factor"},
+            "precipitation": {"$ref": "#/$defs/factor"},
+            "visibility": {"$ref": "#/$defs/factor"},
+            "icing": {"$ref": "#/$defs/factor"},
+            "convective": {"$ref": "#/$defs/factor"},
+            "uncertainty": {"$ref": "#/$defs/factor"}
+          },
+          "additionalProperties": false
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["source_id", "weight"],
+            "properties": {
+              "source_id": {"type": "string", "minLength": 1},
+              "weight": {"type": "number", "minimum": 0, "maximum": 1}
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

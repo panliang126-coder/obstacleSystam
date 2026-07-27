@@ -1,0 +1,49 @@
+{
+  "schema": "sensor/1.0",
+  "event_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "trace_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": null,
+  "source": {
+    "service": "ingest-service",
+    "instance_id": "edge-01",
+    "plugin": "radar-sim",
+    "plugin_version": "1.0.0"
+  },
+  "observed_at": "2026-07-27T03:20:15.100Z",
+  "received_at": "2026-07-27T03:20:15.105Z",
+  "monotonic_ns": 2387349381000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 880,
+  "quality": {
+    "valid": true,
+    "confidence": 0.95,
+    "clock_uncertainty_ms": 1.2,
+    "flags": []
+  },
+  "payload": {
+    "sensor_id": "radar-front-01",
+    "sensor_type": "RADAR",
+    "source_session_id": "019f3a91-0001-7000-8d21-10ac5812a601",
+    "frame_id": "uav-001/radar-front",
+    "calibration_id": "radar-front-cal-20260701",
+    "sample_format": "radar_detections_v1",
+    "sample": {
+      "scan_id": 880,
+      "detections": [
+        {
+          "range_m": 83.2,
+          "azimuth_deg": 4.5,
+          "elevation_deg": -1.0,
+          "radial_velocity_m_s": -6.4,
+          "snr_db": 18.1
+        }
+      ]
+    },
+    "raw_ref": null,
+    "diagnostics": {
+      "device_temperature_deg_c": 46.2
+    }
+  }
+}

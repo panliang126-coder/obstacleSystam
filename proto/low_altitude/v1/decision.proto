@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+enum DecisionAction {
+  DECISION_ACTION_UNSPECIFIED = 0;
+  DECISION_ACTION_CONTINUE = 1;
+  DECISION_ACTION_AVOID = 2;
+  DECISION_ACTION_HOLD = 3;
+  DECISION_ACTION_RETURN = 4;
+  DECISION_ACTION_LAND = 5;
+  DECISION_ACTION_ABORT = 6;
+}
+
+enum AuthorizationState {
+  AUTHORIZATION_STATE_UNSPECIFIED = 0;
+  AUTHORIZATION_STATE_PENDING = 1;
+  AUTHORIZATION_STATE_AUTHORIZED = 2;
+  AUTHORIZATION_STATE_REJECTED = 3;
+}
+
+message DecisionPolicyIdentity {
+  string name = 1;
+  string version = 2;
+  string ruleset_hash = 3;
+}
+
+message DecisionAuthorization {
+  AuthorizationState state = 1;
+  optional string gate = 2;
+  optional google.protobuf.Timestamp checked_at = 3;
+  repeated string failures = 4;
+}
+
+message DecisionPayload {
+  string decision_id = 1;
+  string mission_id = 2;
+  DecisionAction action = 3;
+  uint32 priority = 4;
+  optional string path_id = 5;
+  string risk_id = 6;
+  uint64 twin_revision = 7;
+  repeated string reason_codes = 8;
+  string explanation = 9;
+  repeated string preconditions = 10;
+  google.protobuf.Timestamp expires_at = 11;
+  DecisionPolicyIdentity policy = 12;
+  DecisionAuthorization authorization = 13;
+}
+
+message DecisionMessage {
+  EventMetadata metadata = 1;
+  DecisionPayload payload = 2;
+}

@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+message Wind {
+  double east_m_s = 1;
+  double north_m_s = 2;
+  double up_m_s = 3;
+  double gust_m_s = 4;
+  double uncertainty_m_s = 5;
+}
+
+message EnvironmentRiskFactors {
+  double wind = 1;
+  double precipitation = 2;
+  double visibility = 3;
+  double icing = 4;
+  double convective = 5;
+  double uncertainty = 6;
+}
+
+message EnvironmentProvenance {
+  string source_id = 1;
+  double weight = 2;
+}
+
+message EnvironmentPayload {
+  string environment_id = 1;
+  google.protobuf.Timestamp valid_from = 2;
+  google.protobuf.Timestamp valid_to = 3;
+  SpatialVolume coverage = 4;
+  optional string grid_ref = 5;
+  Wind wind = 6;
+  optional double temperature_deg_c = 7;
+  optional double relative_humidity_pct = 8;
+  optional double precipitation_mm_h = 9;
+  optional double visibility_m = 10;
+  optional double pressure_pa = 11;
+  EnvironmentRiskFactors risk_factors = 12;
+  repeated EnvironmentProvenance provenance = 13;
+}
+
+message EnvironmentMessage {
+  EventMetadata metadata = 1;
+  EnvironmentPayload payload = 2;
+}

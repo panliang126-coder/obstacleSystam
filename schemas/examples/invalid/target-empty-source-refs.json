@@ -1,0 +1,49 @@
+{
+  "schema": "target/1.0",
+  "event_id": "019f3ab3-0101-7000-90c3-08857945120f",
+  "trace_id": "019f3ab1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": "019f3ab1-0101-7000-bd8c-81aa65f7f010",
+  "source": {
+    "service": "perception-service",
+    "instance_id": "edge-01",
+    "plugin": "radar-camera-fusion",
+    "plugin_version": "1.2.0"
+  },
+  "observed_at": "2026-07-27T03:20:15.135Z",
+  "received_at": "2026-07-27T03:20:15.170Z",
+  "monotonic_ns": 2387349440000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 4201,
+  "quality": {
+    "valid": true,
+    "confidence": 0.92,
+    "clock_uncertainty_ms": 1.4,
+    "flags": []
+  },
+  "payload": {
+    "batch_id": "019f3ab3-0102-7000-8f0d-72d5637b8829",
+    "frame_id": "site-alpha-enu-v1",
+    "targets": [
+      {
+        "track_id": "019f3ab0-3310-7000-bb09-d79100dd702c",
+        "state": "CONFIRMED",
+        "classification": {
+          "top_label": "UAV",
+          "probabilities": {"UAV": 1.0}
+        },
+        "position": {
+          "enu": {"east_m": 83.0, "north_m": 6.5, "up_m": 19.2},
+          "frame_id": "site-alpha-enu-v1",
+          "covariance": [1, 0, 0, 0, 1.2, 0, 0, 0, 1.5]
+        },
+        "velocity": null,
+        "dimensions_m": null,
+        "embedding_ref": null,
+        "source_refs": [],
+        "age_ms": 35
+      }
+    ]
+  }
+}

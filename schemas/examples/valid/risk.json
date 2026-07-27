@@ -1,0 +1,64 @@
+{
+  "schema": "risk/1.0",
+  "event_id": "019f3aa4-0101-7000-ad1a-3d91adad8083",
+  "trace_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": "019f3aa3-0101-7000-90c3-08857945120f",
+  "source": {
+    "service": "risk-service",
+    "instance_id": "edge-01",
+    "plugin": "safety-weighted-max",
+    "plugin_version": "1.0.0"
+  },
+  "observed_at": "2026-07-27T03:20:15.190Z",
+  "received_at": "2026-07-27T03:20:15.220Z",
+  "monotonic_ns": 2387349490000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 18722,
+  "quality": {
+    "valid": true,
+    "confidence": 0.9,
+    "clock_uncertainty_ms": 2.0,
+    "flags": []
+  },
+  "payload": {
+    "risk_id": "019f3aa4-0102-7000-90a3-d7104bce2a5a",
+    "subject": {
+      "type": "VEHICLE",
+      "id": "uav-001"
+    },
+    "twin_revision": 18722,
+    "horizon_s": 15,
+    "score": 76.0,
+    "level": "HIGH",
+    "dimensions": {
+      "weather": 32,
+      "collision": 88,
+      "energy": 21,
+      "communication": 10,
+      "system": 15
+    },
+    "explanations": [
+      {
+        "code": "CLOSING_TRACK",
+        "severity": "HIGH",
+        "summary": "前方航迹在 4.2 秒内进入保护区",
+        "evidence": {
+          "track_id": "019f3aa0-3310-7000-bb09-d79100dd702c",
+          "tcpa_s": 4.2,
+          "dcpa_m": 6.1
+        }
+      }
+    ],
+    "valid_until": "2026-07-27T03:20:15.700Z",
+    "recommended_constraints": [
+      {
+        "type": "EXCLUSION_CYLINDER",
+        "center_enu_m": [58.2, 6.8, 19.3],
+        "radius_m": 20,
+        "valid_for_s": 8
+      }
+    ]
+  }
+}

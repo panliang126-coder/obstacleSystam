@@ -1,0 +1,101 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/target.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "target/1.0",
+  "title": "Target Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "target/1.0"},
+        "payload": {"$ref": "#/$defs/target_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "target_payload": {
+      "type": "object",
+      "required": ["batch_id", "frame_id", "targets"],
+      "properties": {
+        "batch_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "frame_id": {"type": "string", "minLength": 1},
+        "targets": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/target"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": [
+        "track_id",
+        "state",
+        "classification",
+        "position",
+        "velocity",
+        "dimensions_m",
+        "embedding_ref",
+        "source_refs",
+        "age_ms"
+      ],
+      "properties": {
+        "track_id": {
+          "oneOf": [
+            {"$ref": "common.schema.json#/$defs/uuid7"},
+            {"type": "null"}
+          ]
+        },
+        "state": {"enum": ["TENTATIVE", "CONFIRMED", "COASTING", "LOST"]},
+        "classification": {
+          "type": "object",
+          "required": ["top_label", "probabilities"],
+          "properties": {
+            "top_label": {"type": "string", "minLength": 1},
+            "probabilities": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "position": {"$ref": "common.schema.json#/$defs/position"},
+        "velocity": {
+          "oneOf": [
+            {"$ref": "common.schema.json#/$defs/velocity"},
+            {"type": "null"}
+          ]
+        },
+        "dimensions_m": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["length", "width", "height"],
+              "properties": {
+                "length": {"type": "number", "exclusiveMinimum": 0},
+                "width": {"type": "number", "exclusiveMinimum": 0},
+                "height": {"type": "number", "exclusiveMinimum": 0}
+              },
+              "additionalProperties": false
+            },
+            {"type": "null"}
+          ]
+        },
+        "embedding_ref": {"type": ["string", "null"]},
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "common.schema.json#/$defs/uuid7"},
+          "uniqueItems": true
+        },
+        "age_ms": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    }
+  }
+}

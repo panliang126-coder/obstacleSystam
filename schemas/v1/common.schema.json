@@ -1,0 +1,190 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/common.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Low-altitude common contract types",
+  "$defs": {
+    "uuid7": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "vector3": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number"},
+        {"type": "number"},
+        {"type": "number"}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "covariance3": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 9,
+      "maxItems": 9
+    },
+    "source": {
+      "type": "object",
+      "required": ["service", "instance_id", "plugin", "plugin_version"],
+      "properties": {
+        "service": {"type": "string", "minLength": 1},
+        "instance_id": {"type": "string", "minLength": 1},
+        "plugin": {"type": ["string", "null"], "minLength": 1},
+        "plugin_version": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "plugin": {"type": "string"},
+            "plugin_version": {"type": "string"}
+          }
+        },
+        {
+          "properties": {
+            "plugin": {"type": "null"},
+            "plugin_version": {"type": "null"}
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "quality": {
+      "type": "object",
+      "required": ["valid", "confidence", "clock_uncertainty_ms", "flags"],
+      "properties": {
+        "valid": {"type": "boolean"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "clock_uncertainty_ms": {"type": ["number", "null"], "minimum": 0},
+        "flags": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "envelope": {
+      "type": "object",
+      "required": [
+        "schema",
+        "event_id",
+        "trace_id",
+        "causation_id",
+        "source",
+        "observed_at",
+        "received_at",
+        "monotonic_ns",
+        "run_id",
+        "mode",
+        "vehicle_id",
+        "sequence",
+        "quality",
+        "payload"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z_]+/[0-9]+\\.[0-9]+$"
+        },
+        "event_id": {"$ref": "#/$defs/uuid7"},
+        "trace_id": {"$ref": "#/$defs/uuid7"},
+        "causation_id": {
+          "oneOf": [
+            {"$ref": "#/$defs/uuid7"},
+            {"type": "null"}
+          ]
+        },
+        "source": {"$ref": "#/$defs/source"},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "received_at": {"type": "string", "format": "date-time"},
+        "monotonic_ns": {"type": ["integer", "null"], "minimum": 0},
+        "run_id": {"$ref": "#/$defs/uuid7"},
+        "mode": {"enum": ["SIM", "REPLAY", "HIL", "LIVE"]},
+        "vehicle_id": {"type": ["string", "null"], "minLength": 1},
+        "sequence": {"type": "integer", "minimum": 0},
+        "quality": {"$ref": "#/$defs/quality"},
+        "payload": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "position": {
+      "type": "object",
+      "required": ["frame_id", "covariance"],
+      "properties": {
+        "wgs84": {
+          "type": "object",
+          "required": ["lat_deg", "lon_deg", "alt_m_msl"],
+          "properties": {
+            "lat_deg": {"type": "number", "minimum": -90, "maximum": 90},
+            "lon_deg": {"type": "number", "minimum": -180, "maximum": 180},
+            "alt_m_msl": {"type": "number"}
+          },
+          "additionalProperties": false
+        },
+        "enu": {
+          "type": "object",
+          "required": ["east_m", "north_m", "up_m"],
+          "properties": {
+            "east_m": {"type": "number"},
+            "north_m": {"type": "number"},
+            "up_m": {"type": "number"}
+          },
+          "additionalProperties": false
+        },
+        "frame_id": {"type": "string", "minLength": 1},
+        "covariance": {"$ref": "#/$defs/covariance3"}
+      },
+      "anyOf": [
+        {"required": ["wgs84"]},
+        {"required": ["enu"]}
+      ],
+      "additionalProperties": false
+    },
+    "velocity": {
+      "type": "object",
+      "required": ["frame_id", "east_m_s", "north_m_s", "up_m_s", "covariance"],
+      "properties": {
+        "frame_id": {"type": "string", "minLength": 1},
+        "east_m_s": {"type": "number"},
+        "north_m_s": {"type": "number"},
+        "up_m_s": {"type": "number"},
+        "covariance": {"$ref": "#/$defs/covariance3"}
+      },
+      "additionalProperties": false
+    },
+    "spatial_volume": {
+      "type": "object",
+      "required": ["type", "frame_id"],
+      "properties": {
+        "type": {"enum": ["POINT", "POLYGON", "BOX3D", "GRID"]},
+        "frame_id": {"type": "string", "minLength": 1},
+        "min": {"$ref": "#/$defs/vector3"},
+        "max": {"$ref": "#/$defs/vector3"},
+        "coordinates": {"type": "array"},
+        "grid_ref": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"type": {"const": "BOX3D"}},
+            "required": ["type"]
+          },
+          "then": {"required": ["min", "max"]}
+        },
+        {
+          "if": {
+            "properties": {"type": {"const": "GRID"}},
+            "required": ["type"]
+          },
+          "then": {"required": ["grid_ref"]}
+        }
+      ],
+      "additionalProperties": false
+    }
+  }
+}

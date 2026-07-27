@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "low_altitude/v1/common.proto";
+
+enum TrackState {
+  TRACK_STATE_UNSPECIFIED = 0;
+  TRACK_STATE_TENTATIVE = 1;
+  TRACK_STATE_CONFIRMED = 2;
+  TRACK_STATE_COASTING = 3;
+  TRACK_STATE_LOST = 4;
+}
+
+message Classification {
+  string top_label = 1;
+  map<string, double> probabilities = 2;
+}
+
+message Dimensions {
+  double length = 1;
+  double width = 2;
+  double height = 3;
+}
+
+message Target {
+  optional string track_id = 1;
+  TrackState state = 2;
+  Classification classification = 3;
+  Position position = 4;
+  optional Velocity velocity = 5;
+  optional Dimensions dimensions_m = 6;
+  optional string embedding_ref = 7;
+  repeated string source_refs = 8;
+  uint64 age_ms = 9;
+}
+
+message TargetPayload {
+  string batch_id = 1;
+  string frame_id = 2;
+  repeated Target targets = 3;
+}
+
+message TargetMessage {
+  EventMetadata metadata = 1;
+  TargetPayload payload = 2;
+}

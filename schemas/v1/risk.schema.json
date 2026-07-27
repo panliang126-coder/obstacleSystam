@@ -1,0 +1,82 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/risk.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "risk/1.0",
+  "title": "Risk Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "risk/1.0"},
+        "payload": {"$ref": "#/$defs/risk_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "score": {"type": "number", "minimum": 0, "maximum": 100},
+    "risk_payload": {
+      "type": "object",
+      "required": [
+        "risk_id",
+        "subject",
+        "twin_revision",
+        "horizon_s",
+        "score",
+        "level",
+        "dimensions",
+        "explanations",
+        "valid_until",
+        "recommended_constraints"
+      ],
+      "properties": {
+        "risk_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "subject": {
+          "type": "object",
+          "required": ["type", "id"],
+          "properties": {
+            "type": {"enum": ["VEHICLE", "TRACK", "PATH", "MISSION", "AREA"]},
+            "id": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        },
+        "twin_revision": {"type": "integer", "minimum": 0},
+        "horizon_s": {"type": "number", "exclusiveMinimum": 0},
+        "score": {"$ref": "#/$defs/score"},
+        "level": {"enum": ["LOW", "MODERATE", "HIGH", "CRITICAL", "UNKNOWN"]},
+        "dimensions": {
+          "type": "object",
+          "required": ["weather", "collision", "energy", "communication", "system"],
+          "properties": {
+            "weather": {"$ref": "#/$defs/score"},
+            "collision": {"$ref": "#/$defs/score"},
+            "energy": {"$ref": "#/$defs/score"},
+            "communication": {"$ref": "#/$defs/score"},
+            "system": {"$ref": "#/$defs/score"}
+          },
+          "additionalProperties": false
+        },
+        "explanations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["code", "severity", "summary", "evidence"],
+            "properties": {
+              "code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
+              "severity": {"enum": ["LOW", "MODERATE", "HIGH", "CRITICAL", "UNKNOWN"]},
+              "summary": {"type": "string", "minLength": 1},
+              "evidence": {"type": "object"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "valid_until": {"type": "string", "format": "date-time"},
+        "recommended_constraints": {
+          "type": "array",
+          "items": {"type": "object"}
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

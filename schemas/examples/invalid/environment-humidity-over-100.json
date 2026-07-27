@@ -1,0 +1,60 @@
+{
+  "schema": "environment/1.0",
+  "event_id": "019f3ab2-1201-7000-8711-46c74153fa91",
+  "trace_id": "019f3ab2-1101-7000-bb21-d341a19a70b0",
+  "causation_id": "019f3ab2-1181-7000-97b1-5c7e47cf0a70",
+  "source": {
+    "service": "weather-service",
+    "instance_id": "edge-01",
+    "plugin": "local-weather-fusion",
+    "plugin_version": "1.0.0"
+  },
+  "observed_at": "2026-07-27T03:20:15.000Z",
+  "received_at": "2026-07-27T03:20:15.210Z",
+  "monotonic_ns": 2387349491000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 92,
+  "quality": {
+    "valid": true,
+    "confidence": 0.84,
+    "clock_uncertainty_ms": 20.0,
+    "flags": []
+  },
+  "payload": {
+    "environment_id": "019f3ab2-1200-7000-b1c1-22a4047a2e3c",
+    "valid_from": "2026-07-27T03:20:15Z",
+    "valid_to": "2026-07-27T03:20:25Z",
+    "coverage": {
+      "type": "BOX3D",
+      "frame_id": "site-alpha-enu-v1",
+      "min": [-500, -500, 0],
+      "max": [500, 500, 300]
+    },
+    "grid_ref": null,
+    "wind": {
+      "east_m_s": 5.1,
+      "north_m_s": -0.8,
+      "up_m_s": 0.2,
+      "gust_m_s": 8.3,
+      "uncertainty_m_s": 1.1
+    },
+    "temperature_deg_c": 31.4,
+    "relative_humidity_pct": 101,
+    "precipitation_mm_h": 2.2,
+    "visibility_m": 4500,
+    "pressure_pa": 100420,
+    "risk_factors": {
+      "wind": 0.32,
+      "precipitation": 0.18,
+      "visibility": 0.25,
+      "icing": 0.0,
+      "convective": 0.1,
+      "uncertainty": 0.12
+    },
+    "provenance": [
+      {"source_id": "weather-radar-01", "weight": 1.0}
+    ]
+  }
+}

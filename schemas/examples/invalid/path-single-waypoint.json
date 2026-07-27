@@ -1,0 +1,61 @@
+{
+  "schema": "path/1.0",
+  "event_id": "019f3ab5-0101-7000-a01f-5f673f9cba2f",
+  "trace_id": "019f3ab1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": "019f3ab4-0101-7000-ad1a-3d91adad8083",
+  "source": {
+    "service": "planning-service",
+    "instance_id": "edge-01",
+    "plugin": "local-mpc",
+    "plugin_version": "1.1.0"
+  },
+  "observed_at": "2026-07-27T03:20:15.220Z",
+  "received_at": "2026-07-27T03:20:15.250Z",
+  "monotonic_ns": 2387349520000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 902,
+  "quality": {
+    "valid": true,
+    "confidence": 0.91,
+    "clock_uncertainty_ms": 2.0,
+    "flags": []
+  },
+  "payload": {
+    "path_id": "019f3ab5-0102-7000-b6f7-7b73b661c32d",
+    "mission_id": "mission-20260727-001",
+    "planner": {
+      "name": "local_mpc",
+      "version": "1.1.0",
+      "algorithm": "MPC"
+    },
+    "twin_revision": 18722,
+    "risk_id": "019f3ab4-0102-7000-90a3-d7104bce2a5a",
+    "frame_id": "site-alpha-enu-v1",
+    "waypoints": [
+      {
+        "seq": 0,
+        "enu_m": [0, 0, 20],
+        "target_speed_m_s": 6,
+        "eta_s": 0
+      }
+    ],
+    "costs": {
+      "distance": 1.0,
+      "time": 0.8,
+      "energy": 0.7,
+      "risk": 0.3,
+      "total": 2.8
+    },
+    "constraints_applied": [],
+    "validation": {
+      "collision_free": true,
+      "dynamics_feasible": true,
+      "geofence_valid": true,
+      "minimum_clearance_m": 18.5
+    },
+    "valid_until": "2026-07-27T03:20:15.600Z",
+    "status": "CANDIDATE"
+  }
+}
