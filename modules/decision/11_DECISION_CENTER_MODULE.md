@@ -207,6 +207,18 @@ EventBus、Clock、Twin/Risk/Planning、Mission Repository、Policy/Config Repos
 7. 策略插件崩溃后 500 ms 内规则基线生效。
 8. 重复 Decision/Control 消息不产生重复副作用。
 
+### 16.1 Phase 5 可执行基线
+
+- `DecisionCenter` 已实现 Continue/Avoid/Hold/Return/Land/Abort 硬规则、
+  Twin revision 校验、上下文去重、车辆能力降级和 Avoid 恢复滞回。
+- `SafetyGate` 独立校验 Decision/Risk/Path/Vehicle 的身份、时效、revision、
+  路径验证、链路、车辆能力和 endpoint 模式绑定；异常统一 fail-closed。
+- `SimulatedControlGateway` 只接收 `SIM` 下已授权 Decision，以 Decision ID 幂等，
+  输出 `control.command/1.0` 和 `control.ack/1.0`，不包含真实飞控连接能力。
+- 标准 SIL 套件覆盖 Continue、Avoid、Return、Land、Hold、过期路径、SIM→REAL
+  拒绝、Decision ID 复用和重复控制副作用。
+- 当前 Ack 为同步模拟完成；超时/分阶段执行监督和真实飞控映射留待韧性与 HIL 阶段。
+
 ## 17. 测试方法
 
 - 状态机状态/转换/guard/超时的模型化测试。

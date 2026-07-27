@@ -1,0 +1,52 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/control_command.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "control.command/1.0",
+  "title": "Control Command Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "control.command/1.0"},
+        "payload": {"$ref": "#/$defs/control_command_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "control_command_payload": {
+      "type": "object",
+      "required": [
+        "command_id",
+        "decision_id",
+        "mission_id",
+        "action",
+        "path_id",
+        "endpoint_id",
+        "endpoint_kind",
+        "idempotency_key",
+        "deadline",
+        "authorization_token_hash",
+        "issued_at"
+      ],
+      "properties": {
+        "command_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "decision_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "mission_id": {"type": "string", "minLength": 1},
+        "action": {"enum": ["CONTINUE", "AVOID", "HOLD", "RETURN", "LAND", "ABORT"]},
+        "path_id": {
+          "oneOf": [
+            {"$ref": "common.schema.json#/$defs/uuid7"},
+            {"type": "null"}
+          ]
+        },
+        "endpoint_id": {"type": "string", "minLength": 1},
+        "endpoint_kind": {"enum": ["SIMULATED", "REAL"]},
+        "idempotency_key": {"type": "string", "minLength": 8, "maxLength": 128},
+        "deadline": {"type": "string", "format": "date-time"},
+        "authorization_token_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "issued_at": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

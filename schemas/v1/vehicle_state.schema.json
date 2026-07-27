@@ -1,0 +1,68 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/vehicle_state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "vehicle.state/1.0",
+  "title": "Vehicle State Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "vehicle.state/1.0"},
+        "payload": {"$ref": "#/$defs/vehicle_state_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "vehicle_state_payload": {
+      "type": "object",
+      "required": [
+        "state_id",
+        "twin_revision",
+        "frame_id",
+        "position_enu_m",
+        "velocity_enu_m_s",
+        "battery_pct",
+        "flight_mode",
+        "armed",
+        "link",
+        "failsafe",
+        "safe_to_hold",
+        "return_feasible",
+        "landing_feasible",
+        "capabilities",
+        "updated_at"
+      ],
+      "properties": {
+        "state_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "twin_revision": {"type": "integer", "minimum": 0},
+        "frame_id": {"type": "string", "minLength": 1},
+        "position_enu_m": {"$ref": "common.schema.json#/$defs/vector3"},
+        "velocity_enu_m_s": {"$ref": "common.schema.json#/$defs/vector3"},
+        "battery_pct": {"type": "number", "minimum": 0, "maximum": 100},
+        "flight_mode": {"type": "string", "minLength": 1},
+        "armed": {"type": "boolean"},
+        "link": {
+          "type": "object",
+          "required": ["healthy", "age_ms"],
+          "properties": {
+            "healthy": {"type": "boolean"},
+            "age_ms": {"type": "number", "minimum": 0}
+          },
+          "additionalProperties": false
+        },
+        "failsafe": {"type": "boolean"},
+        "safe_to_hold": {"type": "boolean"},
+        "return_feasible": {"type": "boolean"},
+        "landing_feasible": {"type": "boolean"},
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"enum": ["CONTINUE", "AVOID", "HOLD", "RETURN", "LAND", "ABORT"]},
+          "uniqueItems": true
+        },
+        "updated_at": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

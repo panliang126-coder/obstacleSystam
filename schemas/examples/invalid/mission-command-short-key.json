@@ -1,0 +1,4 @@
+{
+  "schema": "mission.command/1.0",
+  "payload": {"idempotency_key": "short"}
+}

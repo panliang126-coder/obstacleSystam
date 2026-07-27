@@ -1,0 +1,42 @@
+{
+  "schema": "vehicle.state/1.0",
+  "event_id": "019f3aa6-0201-7000-b8f6-d17417e1c921",
+  "trace_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": null,
+  "source": {
+    "service": "vehicle-state-service",
+    "instance_id": "sim-01",
+    "plugin": null,
+    "plugin_version": null
+  },
+  "observed_at": "2026-07-27T03:20:15.250Z",
+  "received_at": "2026-07-27T03:20:15.250Z",
+  "monotonic_ns": 2387349540000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 1,
+  "quality": {
+    "valid": true,
+    "confidence": 1.0,
+    "clock_uncertainty_ms": 0.0,
+    "flags": []
+  },
+  "payload": {
+    "state_id": "019f3aa6-0202-7000-8192-fbcc8ad66f25",
+    "twin_revision": 18722,
+    "frame_id": "site-alpha-enu-v1",
+    "position_enu_m": [10.0, 0.0, 20.0],
+    "velocity_enu_m_s": [6.0, 0.0, 0.0],
+    "battery_pct": 80.0,
+    "flight_mode": "MISSION",
+    "armed": true,
+    "link": {"healthy": true, "age_ms": 20.0},
+    "failsafe": false,
+    "safe_to_hold": true,
+    "return_feasible": true,
+    "landing_feasible": true,
+    "capabilities": ["CONTINUE", "AVOID", "HOLD", "RETURN", "LAND", "ABORT"],
+    "updated_at": "2026-07-27T03:20:15.250Z"
+  }
+}

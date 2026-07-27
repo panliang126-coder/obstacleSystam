@@ -1,0 +1,4 @@
+{
+  "schema": "vehicle.state/1.0",
+  "payload": {"battery_pct": 101.0}
+}

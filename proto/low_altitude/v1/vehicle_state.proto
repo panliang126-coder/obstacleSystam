@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+message VehicleLinkState {
+  bool healthy = 1;
+  double age_ms = 2;
+}
+
+message VehicleStatePayload {
+  string state_id = 1;
+  uint64 twin_revision = 2;
+  string frame_id = 3;
+  repeated double position_enu_m = 4;
+  repeated double velocity_enu_m_s = 5;
+  double battery_pct = 6;
+  string flight_mode = 7;
+  bool armed = 8;
+  VehicleLinkState link = 9;
+  bool failsafe = 10;
+  bool safe_to_hold = 11;
+  bool return_feasible = 12;
+  bool landing_feasible = 13;
+  repeated string capabilities = 14;
+  google.protobuf.Timestamp updated_at = 15;
+}
+
+message VehicleStateMessage {
+  EventMetadata metadata = 1;
+  VehicleStatePayload payload = 2;
+}

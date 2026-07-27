@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+enum ControlAckStatus {
+  CONTROL_ACK_STATUS_UNSPECIFIED = 0;
+  CONTROL_ACK_STATUS_ACCEPTED = 1;
+  CONTROL_ACK_STATUS_EXECUTING = 2;
+  CONTROL_ACK_STATUS_COMPLETED = 3;
+  CONTROL_ACK_STATUS_REJECTED = 4;
+  CONTROL_ACK_STATUS_TIMEOUT = 5;
+}
+
+message ControlAckPayload {
+  string ack_id = 1;
+  string command_id = 2;
+  string decision_id = 3;
+  ControlAckStatus status = 4;
+  string endpoint_id = 5;
+  string idempotency_key = 6;
+  google.protobuf.Timestamp acknowledged_at = 7;
+  bool side_effect_applied = 8;
+  uint32 attempt = 9;
+  string detail = 10;
+}
+
+message ControlAckMessage {
+  EventMetadata metadata = 1;
+  ControlAckPayload payload = 2;
+}

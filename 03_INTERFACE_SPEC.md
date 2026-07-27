@@ -470,6 +470,16 @@ Phase 2 已固化以下补充消息字段：
   状态引用、`input_refs`、`staleness` 和聚合 `quality`。引用包含生成该状态的
   revision；安全消费者不得用未固定 revision 的“latest”引用。
 
+Phase 5 已固化其余闭环消息字段：
+
+- `vehicle.state/1.0`：固定 Twin revision、ENU 位置/速度、电量、模式、armed、
+  链路新鲜度、failsafe、安全悬停/返航/备降可行性和车辆动作能力。
+- `mission.command/1.0`：任务动作、操作者、请求时间、参数和强制幂等键。
+- `control.command/1.0`：授权 Decision、动作/Path、endpoint 类型、deadline、
+  幂等键及只保存摘要的授权令牌哈希。
+- `control.ack/1.0`：Command/Decision 引用、执行状态、endpoint、尝试次数和
+  是否产生副作用。重复消息必须返回同一结果而不重复执行。
+
 ## 11. Topic 注册表
 
 | Topic | Schema | 默认 QoS/持久化 | 权限 |

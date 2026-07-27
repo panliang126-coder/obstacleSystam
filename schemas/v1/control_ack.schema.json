@@ -1,0 +1,45 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/control_ack.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "control.ack/1.0",
+  "title": "Control Acknowledgement Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "control.ack/1.0"},
+        "payload": {"$ref": "#/$defs/control_ack_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "control_ack_payload": {
+      "type": "object",
+      "required": [
+        "ack_id",
+        "command_id",
+        "decision_id",
+        "status",
+        "endpoint_id",
+        "idempotency_key",
+        "acknowledged_at",
+        "side_effect_applied",
+        "attempt",
+        "detail"
+      ],
+      "properties": {
+        "ack_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "command_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "decision_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "status": {"enum": ["ACCEPTED", "EXECUTING", "COMPLETED", "REJECTED", "TIMEOUT"]},
+        "endpoint_id": {"type": "string", "minLength": 1},
+        "idempotency_key": {"type": "string", "minLength": 8, "maxLength": 128},
+        "acknowledged_at": {"type": "string", "format": "date-time"},
+        "side_effect_applied": {"type": "boolean"},
+        "attempt": {"type": "integer", "minimum": 1},
+        "detail": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  }
+}

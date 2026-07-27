@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+import "low_altitude/v1/decision.proto";
+
+enum ControlEndpointKind {
+  CONTROL_ENDPOINT_KIND_UNSPECIFIED = 0;
+  CONTROL_ENDPOINT_KIND_SIMULATED = 1;
+  CONTROL_ENDPOINT_KIND_REAL = 2;
+}
+
+message ControlCommandPayload {
+  string command_id = 1;
+  string decision_id = 2;
+  string mission_id = 3;
+  DecisionAction action = 4;
+  optional string path_id = 5;
+  string endpoint_id = 6;
+  ControlEndpointKind endpoint_kind = 7;
+  string idempotency_key = 8;
+  google.protobuf.Timestamp deadline = 9;
+  string authorization_token_hash = 10;
+  google.protobuf.Timestamp issued_at = 11;
+}
+
+message ControlCommandMessage {
+  EventMetadata metadata = 1;
+  ControlCommandPayload payload = 2;
+}

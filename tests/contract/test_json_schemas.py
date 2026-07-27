@@ -8,14 +8,18 @@ from low_altitude_ai.schemas.cli import main, validate_examples
 from low_altitude_ai.schemas.registry import SchemaRegistry, SchemaValidationError
 
 EXPECTED_SCHEMAS = {
+    "control.ack/1.0",
+    "control.command/1.0",
     "decision/1.0",
     "environment/1.0",
     "health/1.0",
+    "mission.command/1.0",
     "path/1.0",
     "risk/1.0",
     "sensor/1.0",
     "target/1.0",
     "twin.snapshot/1.0",
+    "vehicle.state/1.0",
 }
 
 

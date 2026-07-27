@@ -1,0 +1,39 @@
+{
+  "$id": "https://schemas.obstaclesystam.local/v1/mission_command.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-wire-schema": "mission.command/1.0",
+  "title": "Mission Command Message v1.0",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "properties": {
+        "schema": {"const": "mission.command/1.0"},
+        "payload": {"$ref": "#/$defs/mission_command_payload"}
+      }
+    }
+  ],
+  "$defs": {
+    "mission_command_payload": {
+      "type": "object",
+      "required": [
+        "command_id",
+        "mission_id",
+        "action",
+        "idempotency_key",
+        "requested_by",
+        "requested_at",
+        "parameters"
+      ],
+      "properties": {
+        "command_id": {"$ref": "common.schema.json#/$defs/uuid7"},
+        "mission_id": {"type": "string", "minLength": 1},
+        "action": {"enum": ["CREATE", "PAUSE", "RESUME", "CANCEL"]},
+        "idempotency_key": {"type": "string", "minLength": 8, "maxLength": 128},
+        "requested_by": {"type": "string", "minLength": 1},
+        "requested_at": {"type": "string", "format": "date-time"},
+        "parameters": {"type": "object"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

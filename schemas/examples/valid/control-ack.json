@@ -1,0 +1,37 @@
+{
+  "schema": "control.ack/1.0",
+  "event_id": "019f3aa6-0501-7000-b8f6-d17417e1c921",
+  "trace_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": "019f3aa6-0401-7000-b8f6-d17417e1c921",
+  "source": {
+    "service": "control-gateway",
+    "instance_id": "sim-01",
+    "plugin": null,
+    "plugin_version": null
+  },
+  "observed_at": "2026-07-27T03:20:15.280Z",
+  "received_at": "2026-07-27T03:20:15.280Z",
+  "monotonic_ns": 2387349570000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 1,
+  "quality": {
+    "valid": true,
+    "confidence": 1.0,
+    "clock_uncertainty_ms": 0.0,
+    "flags": []
+  },
+  "payload": {
+    "ack_id": "019f3aa6-0502-7000-8192-fbcc8ad66f25",
+    "command_id": "019f3aa6-0402-7000-8192-fbcc8ad66f25",
+    "decision_id": "019f3aa6-0102-7000-8192-fbcc8ad66f25",
+    "status": "COMPLETED",
+    "endpoint_id": "sim-flight-controller-01",
+    "idempotency_key": "decision-019f3aa6-0102",
+    "acknowledged_at": "2026-07-27T03:20:15.280Z",
+    "side_effect_applied": true,
+    "attempt": 1,
+    "detail": "Simulated action completed."
+  }
+}

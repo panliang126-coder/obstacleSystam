@@ -1,0 +1,38 @@
+{
+  "schema": "control.command/1.0",
+  "event_id": "019f3aa6-0401-7000-b8f6-d17417e1c921",
+  "trace_id": "019f3aa1-0101-7000-bd8c-81aa65f7f010",
+  "causation_id": "019f3aa6-0101-7000-b8f6-d17417e1c921",
+  "source": {
+    "service": "safety-gate",
+    "instance_id": "gate-01",
+    "plugin": null,
+    "plugin_version": null
+  },
+  "observed_at": "2026-07-27T03:20:15.270Z",
+  "received_at": "2026-07-27T03:20:15.270Z",
+  "monotonic_ns": 2387349560000,
+  "run_id": "019f3a90-a001-7000-a107-49d5ce6f81d1",
+  "mode": "SIM",
+  "vehicle_id": "uav-001",
+  "sequence": 1,
+  "quality": {
+    "valid": true,
+    "confidence": 1.0,
+    "clock_uncertainty_ms": 0.0,
+    "flags": []
+  },
+  "payload": {
+    "command_id": "019f3aa6-0402-7000-8192-fbcc8ad66f25",
+    "decision_id": "019f3aa6-0102-7000-8192-fbcc8ad66f25",
+    "mission_id": "mission-20260727-001",
+    "action": "AVOID",
+    "path_id": "019f3aa5-0102-7000-b6f7-7b73b661c32d",
+    "endpoint_id": "sim-flight-controller-01",
+    "endpoint_kind": "SIMULATED",
+    "idempotency_key": "decision-019f3aa6-0102",
+    "deadline": "2026-07-27T03:20:15.600Z",
+    "authorization_token_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "issued_at": "2026-07-27T03:20:15.270Z"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "schema": "control.ack/1.0",
+  "payload": {"status": "UNKNOWN"}
+}

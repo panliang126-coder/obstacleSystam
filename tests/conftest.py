@@ -117,3 +117,114 @@ def risk_event(sensor_event: Envelope) -> Envelope:
             ],
         },
     )
+
+
+@pytest.fixture
+def path_event(risk_event: Envelope) -> Envelope:
+    return Envelope(
+        schema="path/1.0",
+        event_id=uuid7(),
+        trace_id=risk_event.trace_id,
+        causation_id=risk_event.event_id,
+        source=Source(
+            service="planning-service",
+            instance_id="test",
+            plugin="validated_detour_planner",
+            plugin_version="1.0.0",
+        ),
+        observed_at=risk_event.observed_at,
+        received_at=risk_event.received_at,
+        monotonic_ns=0,
+        run_id=risk_event.run_id,
+        mode=RuntimeMode.SIM,
+        vehicle_id="uav-001",
+        sequence=0,
+        quality=Quality(valid=True, confidence=1.0),
+        payload={
+            "path_id": str(uuid7()),
+            "mission_id": "test-mission",
+            "planner": {
+                "name": "validated_detour_planner",
+                "version": "1.0.0",
+                "algorithm": "DETERMINISTIC_DETOUR",
+            },
+            "twin_revision": risk_event.payload["twin_revision"],
+            "risk_id": risk_event.payload["risk_id"],
+            "frame_id": "site-alpha-enu-v1",
+            "waypoints": [
+                {
+                    "seq": 0,
+                    "enu_m": [0.0, 0.0, 20.0],
+                    "target_speed_m_s": 6.0,
+                    "eta_s": 0.0,
+                },
+                {
+                    "seq": 1,
+                    "enu_m": [100.0, 30.0, 20.0],
+                    "target_speed_m_s": 6.0,
+                    "eta_s": 17.4,
+                },
+            ],
+            "costs": {
+                "distance": 104.4,
+                "time": 17.4,
+                "energy": 0.104,
+                "risk": 80.0,
+                "total": 3.0,
+            },
+            "constraints_applied": ["risk:test", "twin-revision:1"],
+            "validation": {
+                "collision_free": True,
+                "dynamics_feasible": True,
+                "geofence_valid": True,
+                "minimum_clearance_m": 10.0,
+            },
+            "valid_until": (
+                risk_event.received_at + timedelta(seconds=10)
+            ).isoformat().replace("+00:00", "Z"),
+            "status": "CANDIDATE",
+        },
+    )
+
+
+@pytest.fixture
+def vehicle_state_event(risk_event: Envelope) -> Envelope:
+    return Envelope(
+        schema="vehicle.state/1.0",
+        event_id=uuid7(),
+        trace_id=risk_event.trace_id,
+        causation_id=risk_event.event_id,
+        source=Source(service="vehicle-state-service", instance_id="test"),
+        observed_at=risk_event.observed_at,
+        received_at=risk_event.received_at,
+        monotonic_ns=0,
+        run_id=risk_event.run_id,
+        mode=RuntimeMode.SIM,
+        vehicle_id="uav-001",
+        sequence=0,
+        quality=Quality(valid=True, confidence=1.0),
+        payload={
+            "state_id": str(uuid7()),
+            "twin_revision": risk_event.payload["twin_revision"],
+            "frame_id": "site-alpha-enu-v1",
+            "position_enu_m": [0.0, 0.0, 20.0],
+            "velocity_enu_m_s": [6.0, 0.0, 0.0],
+            "battery_pct": 80.0,
+            "flight_mode": "MISSION",
+            "armed": True,
+            "link": {"healthy": True, "age_ms": 0.0},
+            "failsafe": False,
+            "safe_to_hold": True,
+            "return_feasible": True,
+            "landing_feasible": True,
+            "capabilities": [
+                "CONTINUE",
+                "AVOID",
+                "HOLD",
+                "RETURN",
+                "LAND",
+                "ABORT",
+            ],
+            "updated_at": risk_event.received_at.isoformat().replace("+00:00", "Z"),
+        },
+    )

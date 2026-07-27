@@ -1,0 +1,4 @@
+{
+  "schema": "control.command/1.0",
+  "payload": {"authorization_token_hash": "raw-secret"}
+}

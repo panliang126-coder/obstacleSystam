@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package low_altitude.v1;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "low_altitude/v1/common.proto";
+
+enum MissionCommandAction {
+  MISSION_COMMAND_ACTION_UNSPECIFIED = 0;
+  MISSION_COMMAND_ACTION_CREATE = 1;
+  MISSION_COMMAND_ACTION_PAUSE = 2;
+  MISSION_COMMAND_ACTION_RESUME = 3;
+  MISSION_COMMAND_ACTION_CANCEL = 4;
+}
+
+message MissionCommandPayload {
+  string command_id = 1;
+  string mission_id = 2;
+  MissionCommandAction action = 3;
+  string idempotency_key = 4;
+  string requested_by = 5;
+  google.protobuf.Timestamp requested_at = 6;
+  google.protobuf.Struct parameters = 7;
+}
+
+message MissionCommandMessage {
+  EventMetadata metadata = 1;
+  MissionCommandPayload payload = 2;
+}
