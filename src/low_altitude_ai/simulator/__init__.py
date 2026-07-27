@@ -9,6 +9,7 @@ from low_altitude_ai.simulator.scenario import (
     ScenarioValidationError,
     load_radar_scenario,
 )
+from low_altitude_ai.simulator.weather_model import WeatherSensorModel, WeatherTruth
 
 __all__ = [
     "DeterministicUuid7Factory",
@@ -18,5 +19,7 @@ __all__ = [
     "RandomStream",
     "ScenarioValidationError",
     "SimClock",
+    "WeatherSensorModel",
+    "WeatherTruth",
     "load_radar_scenario",
 ]

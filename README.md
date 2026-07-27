@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-当前里程碑为 Phase 2：模拟器与数字孪生。
+当前里程碑为 Phase 3：感知与天气。
 
 - 17 份工程设计文档；
 - 版本化事件信封和 UUIDv7；
@@ -16,7 +16,10 @@
 - 有界内存 Event Bus、可控 SimClock 和确定性雷达模拟 Driver；
 - 单调 revision、去重、晚到保护和容量限制的 Twin State Store；
 - 可重复的“模拟雷达→Event Bus→Twin Snapshot”端到端链路；
-- Schema、protobuf、架构、驱动、Event Bus、Twin 和集成测试。
+- 不读取模拟 truth 的雷达检测关联、航迹确认/滑行/丢失基线；
+- 带物理质量控制、加权融合和保守缺测语义的天气估计；
+- 可重复的“Sensor→Perception/Weather→Twin”Phase 3 链路；
+- Schema、protobuf、架构、驱动、插件、性能和集成测试。
 
 系统行为和开发顺序以 [00_MASTER.md](00_MASTER.md) 为准。
 
@@ -40,6 +43,15 @@ obstacle-phase2-demo
 
 命令会执行 10 个模拟雷达扫描，输出规范化事件哈希、最终 Twin revision
 和快照哈希。同一场景、种子和版本的结果必须完全一致。
+
+运行 Phase 3 感知与天气演示：
+
+```bash
+obstacle-phase3-demo
+```
+
+该命令输出航迹确认数、位置 RMSE、天气风速误差、Twin revision 和三条确定性
+哈希。基线场景要求位置 RMSE ≤ 2 m、风速误差 ≤ 2 m/s。
 
 服务器宿主机没有 Python 3.11 时，可使用 Docker：
 

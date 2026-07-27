@@ -162,3 +162,19 @@ weather:
 - 不同网格分辨率、覆盖和 horizon 的性能/内存测试。
 - 对相同 Scenario/seed 执行确定性回放并比较网格哈希和风险因子。
 - 与独立参考站/留出数据做交叉验证，报告空间分层误差。
+
+## 13. Phase 3 可执行基线
+
+当前 `local_weather_weighted_fusion@1.0.0` 插件提供：
+
+- 气象 `sensor/1.0` 的风、阵风、温湿度、降水、能见度和气压物理 QC；
+- 按输入质量 confidence 加权，阵风/降水/能见度采用保守聚合；
+- 有效期、BOX3D coverage、来源权重、风不确定度和六类风险因子；
+- 乱序、过期、非法和无观测的显式降级；
+- 无观测时 `quality.valid=false`、confidence=0 且
+  `risk_factors.uncertainty=1.0`，不会把未知天气标记为低风险；
+- 确定性模拟天气观测和端到端 Twin 更新。
+
+合成基线场景要求风速误差 ≤ 2 m/s、本地输出 P95 ≤ 100 ms、provenance 与
+coverage 完整率 100%。尚未实现天气网格、空间插值、外部预报、突变告警、
+多站冲突检测和独立参考站交叉验证。

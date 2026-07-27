@@ -168,7 +168,7 @@ class RadarSimulatorDriver:
         self,
         target: RadarTargetScenario,
         elapsed_s: float,
-    ) -> dict[str, float | str] | None:
+    ) -> dict[str, float] | None:
         east_m, north_m, up_m = _position(target, elapsed_s)
         range_m = math.sqrt(east_m**2 + north_m**2 + up_m**2)
         if range_m == 0 or range_m > self._scenario.range_m:
@@ -186,8 +186,6 @@ class RadarSimulatorDriver:
             east_m * east_m_s + north_m * north_m_s + up_m * up_m_s
         ) / range_m
         return {
-            "target_hint": target.target_id,
-            "classification_hint": target.classification,
             "range_m": round(
                 max(0.0, range_m + self._noise.gauss(0, self._scenario.range_noise_std_m)),
                 6,

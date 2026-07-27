@@ -207,3 +207,21 @@ perception:
 - 故障注入：丢帧、重复、乱序、时钟漂移、错误标定、遮挡、模糊、雨雾、GPU OOM。
 - 性能：目标密度、分辨率和帧率矩阵；记录 P50/P95/P99、显存和队列。
 - 回放：固定 run 输出规范化 golden tracks，版本升级对比。
+
+## 13. Phase 3 可执行基线
+
+当前 `radar_nearest_neighbor@1.0.0` 插件提供：
+
+- 雷达球坐标到 ENU 的显式转换；
+- 恒速预测、欧氏距离硬门控和单目标/稀疏目标最近邻关联；
+- `TENTATIVE→CONFIRMED→COASTING→LOST` 生命周期；
+- 重复和乱序输入拒绝融合，丢帧时扩大协方差并输出降级状态；
+- 每个航迹输出 UUIDv7、协方差、速度、age 和源事件引用；
+- 与模拟器隔离：雷达业务载荷不包含 truth target ID 或 truth classification。
+
+`dynamic-crossing-v1` 基线场景达到位置 RMSE ≤ 2 m、0 次 ID switch、
+100% source refs/协方差完整率，插件本地 P95 门槛为 80 ms。
+
+该实现是可审计基线，不是完整雷达+视觉融合：尚未实现 Hungarian/JPDA、Kalman、
+EO/IR、Embedding、多目标密集交叉、模型 artifact、GPU 回退和项目真实数据集
+HOTA/MOTA 评估，因此不能宣称达到本文件的雷达+视觉召回率指标。
