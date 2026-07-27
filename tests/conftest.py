@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -5,6 +6,8 @@ import pytest
 
 from low_altitude_ai.domain import Envelope, Quality, RuntimeMode, Source
 from low_altitude_ai.domain.identifiers import uuid7
+
+os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 
 @pytest.fixture(scope="session")

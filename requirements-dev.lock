@@ -1,4 +1,4 @@
-# Resolved on 2026-07-27 for the Phase 1 contract toolchain.
+# Resolved on 2026-07-27 for the Phase 6 contract and offscreen Qt toolchain.
 # Regenerate deliberately and review the dependency diff before updating.
 arrow==1.4.0
 attrs==26.1.0
@@ -20,9 +20,13 @@ packaging==26.2
 pathspec==1.1.1
 pluggy==1.6.0
 protobuf==7.35.1
+PyQt6==6.11.0
+PyQt6-Qt6==6.11.1
+PyQt6_sip==13.11.1
 Pygments==2.20.0
 pytest==8.4.2
 pytest-cov==6.3.0
+pytest-qt==4.5.0
 python-dateutil==2.9.0.post0
 referencing==0.37.0
 rfc3339-validator==0.1.4

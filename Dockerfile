@@ -6,6 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /workspace
 
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y libegl1 libgl1 \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY pyproject.toml README.md requirements-dev.lock ./
 COPY src ./src
 COPY schemas ./schemas

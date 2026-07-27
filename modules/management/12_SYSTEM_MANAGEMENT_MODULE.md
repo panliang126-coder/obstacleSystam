@@ -198,6 +198,20 @@ Config/Artifact/Audit Repository、EventBus、身份提供方、日志/指标/�
 6. 插件激活失败可在 30 s 内自动回滚到已验证版本。
 7. Run manifest 完整率 100%。
 
+### 14.1 Phase 6 可执行基线
+
+- 管理命令强制包含 actor、role、reason、client time、expected revision 和
+  idempotency key；重复键同内容返回原结果，不同内容拒绝。
+- 配置实现 Draft→Schema Validated→Approved→Active 状态，安全 namespace/
+  阈值需要两个不同 Safety Approver；明文 Secret 字段拒绝，只允许 `ref:` 引用。
+- 插件实现 Registered/Validated→Shadow→Active→Rollback 基线，并校验 artifact
+  SHA-256、签名结果和接口兼容结果。
+- Health 聚合对超时心跳显示 UNKNOWN；关键 Risk/Safety Gate/Control Gateway
+  UNKNOWN 或 UNHEALTHY 时系统显示 UNHEALTHY。
+- 告警按 dedup key 合并但保留计数，确认只记录 actor/time，不修改风险等级。
+- 当前为内存 Repository 基线；持久数据库、外部身份、制品签名服务和跨实例事务
+  仍属于后续部署集成。
+
 ## 15. 测试方法
 
 - 配置 Schema、作用域覆盖、并发 revision、审批和回滚测试。

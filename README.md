@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-当前里程碑为 Phase 5：决策闭环。
+当前里程碑为 Phase 6：GUI 与系统管理。
 
 - 17 份工程设计文档；
 - 版本化事件信封和 UUIDv7；
@@ -25,6 +25,11 @@
 - 带动作优先级、输入去重和恢复滞回的确定性安全状态机；
 - 独立 fail-closed Safety Gate 和仅允许 SIM 的幂等模拟 Control Gateway；
 - Continue/Avoid/Return/Land/Hold 全场景 Decision→Command→Ack 追溯链；
+- 有界 UI State Store、sequence 缺口检测、数据年龄与断线冻结语义；
+- 确定性 REPLAY pause/seek/step，回放状态下强制禁用 LIVE 命令；
+- PyQt6 Overview/Situation/Risk & Decision/Health/Replay/Management 工作区；
+- 带 RBAC、幂等、revision、双人安全审批和不可变审计的管理服务；
+- 配置、插件、健康聚合和告警确认视图；
 - Schema、protobuf、架构、驱动、插件、性能和集成测试。
 
 系统行为和开发顺序以 [00_MASTER.md](00_MASTER.md) 为准。
@@ -77,6 +82,16 @@ obstacle-phase5-demo
 该命令执行 Continue、Avoid、Return、Land、Hold 五个确定性 SIL 场景。每个场景
 必须通过独立 Safety Gate，生成可追溯的模拟控制命令和 Ack；重复发送不能产生重复
 副作用，真实 endpoint 命令数必须为 0。
+
+启动 Phase 6 PyQt6 前端：
+
+```bash
+obstacle-gui
+```
+
+无桌面测试环境可使用 `obstacle-gui --offscreen --smoke-test` 验证启动。GUI 只消费公共 Snapshot/Query/
+Command DTO；它不会直接连接业务插件、数据库或飞控。断线、同步、降级和回放状态
+都会禁用控制类命令，服务端仍会再次执行 RBAC 和安全校验。
 
 服务器宿主机没有 Python 3.11 时，可使用 Docker：
 

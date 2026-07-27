@@ -186,6 +186,21 @@ PyQt6、地图/绘图/3D 渲染适配器、API Client、身份客户端。依赖
 6. 回放模式向 LIVE 命令 API 成功请求数为 0。
 7. 关键页面键盘操作、缩放和色彩可辨性测试通过。
 
+### 16.1 Phase 6 可执行基线
+
+- `UiStateStore` 按实体合并高频消息，检测 sequence 缺口，显示数据 age，并分别限制
+  普通实体与已处理关键事件历史容量。
+- `ReplayController` 支持 pause/play/seek/step；每次 seek 清空临时状态并从事件序列
+  重建，REPLAY Store 不允许发送 LIVE 管理命令。
+- PyQt6 Adapter 提供 Overview、Situation、Risk & Decision、Health、Replay 和
+  Management 六个工作区；Snapshot 通过 queued Signal 进入主线程。
+- Decision 的 PENDING/AUTHORIZED/REJECTED 和 Control Ack 使用独立状态文本，
+  不以颜色作为唯一编码。
+- Linux offscreen Qt 测试覆盖 Signal、连接状态、管理视图、告警确认和 1000 航迹
+  模型更新 P95 16 ms 帧预算。
+- 地图瓦片、3D Scene、真实 Query/Event Client 与视觉 golden 尚未接入，不能宣称
+  已完成现场级 GUI 验收。
+
 ## 17. 测试方法
 
 - ViewModel/State Store 单元测试；Qt Model 行列、更新和 selection 测试。
