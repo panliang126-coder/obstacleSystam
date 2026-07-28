@@ -22,15 +22,28 @@ def test_qt_window_distinguishes_live_and_disconnected_state(
     bridge = SnapshotBridge(window)
     bridge.publish(store.snapshot(risk_event.received_at))
     qtbot.waitUntil(  # type: ignore[attr-defined]
-        lambda: window.connection_label.text() == "LIVE",
+        lambda: window.connection_label.text() == "已连接",
         timeout=1_000,
     )
 
-    assert window.connection_label.text() == "LIVE"
-    assert window.risk_label.text() == "Risk: CRITICAL"
+    assert window.windowTitle() == "低空智能感知与自主决策系统"
+    assert window.connection_label.text() == "已连接"
+    assert window.mode_label.text() == "模式: 仿真"
+    assert window.risk_label.text() == "风险: 严重"
     assert window.command_button.isEnabled()
     assert window.entity_model.rowCount() == 1
     assert window.tabs.count() == 6
+    assert window.tabs.tabText(0) == "总览"
+    assert window.tabs.tabText(2) == "风险与决策"
+    assert window.tabs.tabText(5) == "系统管理"
+    assert window.entity_model.headerData(
+        0,
+        Qt.Orientation.Horizontal,
+    ) == "类型"
+    assert window.entity_model.data(window.entity_model.index(0, 0)) == "风险"
+    assert window.entity_model.data(window.entity_model.index(0, 2)) == "严重"
+    assert window.command_button.text() == "下发指令"
+    assert window.ack_button.text() == "确认告警"
     window.update_management(
         (
             ConfigSnapshot(
@@ -66,7 +79,7 @@ def test_qt_window_distinguishes_live_and_disconnected_state(
 
     store.disconnect()
     window.update_snapshot(store.snapshot(risk_event.received_at))
-    assert window.connection_label.text() == "DISCONNECTED"
+    assert window.connection_label.text() == "未连接"
     assert not window.command_button.isEnabled()
 
 
